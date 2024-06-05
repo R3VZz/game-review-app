@@ -13,6 +13,17 @@ const editReview = async (req, res) => {
     res.status(200).json(review);
 }
 
+const createReview = async (req, res) => {
+    const {text} = req.body
+    console.log(text)
+    const reviewObject = new Review({
+        text
+    })
+
+    const newReview = await reviewObject.save()
+    res.status(200).json(newReview)
+}
+
 const deleteReview = async (req, res) => {
     // get id from ':id' param from the route
     const { id } = req.params
@@ -44,4 +55,6 @@ const getReviews = async (req, res) => {
         message: "all items",
         reviews: items
     })
+    // respond with a success message
+    res.status(200).json(deletedReview)
 }
