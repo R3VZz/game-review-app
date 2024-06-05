@@ -12,3 +12,16 @@ const editReview = async (req, res) => {
     // response with json
     res.status(200).json(review);
 }
+
+const deleteReview = async (req, res) => {
+    // get id from ':id' param from the route
+    const { id } = req.params
+    // use mongoose model method findByIdAndDelete
+    const deletedReview = await Review.findByIdAndDelete(id, updates)
+    // message if the review is not found
+    if (!review) {
+        return res.status(404).json( { message: "Item not found"} );
+    }
+    // respond with a success message
+    res.status(200).json(deletedReview)
+}
