@@ -16,16 +16,17 @@ const getReviews = async (req, res) => {
     // find all items from a mongoose Model method 
     const reviews = await Review.find({})
     // respond with an object that has a message and the items from the DB
-    res.json({
-        message: "all reviews", reviews
-    })
+
     // respond with a success message
-    res.status(200).json(reviews)
+    res.status(200).json({
+        message: "all reviews",
+        reviews
+    }) 
 }
 
 // POST request - add review
 const createReview = async (req, res) => {
-    const { score, description, hoursPlayed} = req.body
+    const { score, description, hoursPlayed } = req.body
 
     const reviewObject = new Review({
         score,
