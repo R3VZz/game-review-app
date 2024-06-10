@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 const GameList = () => {
     const [gameData, setGameData] = useState([]);
@@ -39,8 +40,9 @@ const GameList = () => {
                     {gameData.length > 0 ? (
                         gameData.map((game) => (
                             <div className="info" key={game.appid}>
-                                <p>{game.name}</p>
-                                <p>{game.playtime_forever} minutes</p>
+                                <Link to={`/games/${game.appid}`}>
+                                    <p>{game.name}</p>
+                                </Link>
                             </div>
                         ))
                     ) : (<p>No games found</p>)
