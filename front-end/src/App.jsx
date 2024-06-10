@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import GameList from './api/game-list';
+import Home from './pages/Home';
 import Game from './pages/Game'
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' Component={GameList} />
+          <Route path='/' Component={Home} />
           <Route path='/games/:id' Component={Game} />
         </Routes>
       </Router>
