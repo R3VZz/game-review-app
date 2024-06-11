@@ -41,7 +41,7 @@ const Home = () => {
                     {gameData.length > 0 ? (
                         gameData.map((game) => (
                             <div className="info" key={game.appid}>
-                                <Link to={`/games/${game.appid}`}>
+                                <Link className='link' to={`/games/${game.appid}`}>
                                     <p>{game.name}</p>
                                 </Link>
                             </div>
