@@ -3,75 +3,74 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:4000';
 
-const Reviews = () => {
-    const [ reviews, setReviews ] = useState([]);
-    const [ newReview, setNewReview ] = useState({ score: '', description: '', hoursPlayed: '' });
-    const [ editReview, setEditReview ] = useState(null);
+const Reviews = ({ gameId }) => {
+    const [reviews, setReviews] = useState([]);
+    const [newReview, setNewReview] = useState({ score: '', description: '', hoursPlayed: '', gameId });
+    const [editReview, setEditReview] = useState(null);
 
-    useEffect( () => {
-        // get existing reviews from the database
-        axios.get(`${API_URL}/reviews`)
-            .then(response => {
-                console.log('Fetched reviews:', response.data.reviews);
-                setReviews(Array.isArray(response.data.reviews) ? response.data.reviews : []);
-            })
-            .catch(err => console.error('Error fetching reviews:', err))
-    }, [])
+    useEffect(() => {
+        if (gameId) {
+            // get reviews for the specific game
+            axios.get(`${API_URL}/reviews/game/${gameId}`)
+                .then(response => {
+                    setReviews(Array.isArray(response.data.reviews) ? response.data.reviews : []);
+                })
+                .catch(err => console.error('Error fetching reviews:', err));
+        }
+    }, [gameId]);
 
-    const handleEdit = ( review ) => {
+    const handleEdit = (review) => {
         setEditReview(review._id);
-        setNewReview(review);
-    }
+        setNewReview({ ...review, gameId });
+    };
 
     const handleSave = async () => {
         try {
             if (editReview !== null) {
                 // edit an existing review
-                await axios.patch(`${API_URL}/reviews/${editReview}`, newReview)
+                await axios.patch(`${API_URL}/reviews/${editReview}`, { ...newReview, gameId });
             } else {
                 // add a new review
-                await axios.post(`${API_URL}/reviews`, newReview)
+                await axios.post(`${API_URL}/reviews`, { ...newReview, gameId });
             }
             // reset the form
-            setNewReview({ score: '', description: '', hoursPlayed: '' });
+            setNewReview({ score: '', description: '', hoursPlayed: '', gameId });
             setEditReview(null);
             // fetch the updated reviews
-            const response = await axios.get(`${API_URL}/reviews`);
+            const response = await axios.get(`${API_URL}/reviews/game/${gameId}`);
             setReviews(Array.isArray(response.data.reviews) ? response.data.reviews : []);
         } catch (error) {
             console.error('Error saving review', error);
         }
-    }
+    };
 
     const handleDelete = async (id) => {
         try {
             await axios.delete(`${API_URL}/reviews/${id}`);
-            // fetch the updated review list
-            const response = axios.get(`${API_URL}/reviews`);
             // update state after deleting and display remaining reviews
             setReviews(reviews.filter(review => review._id !== id));
         } catch (error) {
-            console.error('Error deleting review', error)
+            console.error('Error deleting review', error);
         }
-    }
+    };
 
     const handleChange = (e) => {
         setNewReview({
             ...newReview,
-            [e.target.name]: e.target.value
-        })
-    }
+            [e.target.name]: e.target.value,
+        });
+    };
 
     return (
         <div>
             <h2>Reviews:</h2>
-            <form onSubmit={(e) => {e.preventDefault(); handleSave(); }}>
+            <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
                 <div>
                     <label>
                         Score:
                         <input
-                            type='number'
-                            name='score'
+                            type="number"
+                            name="score"
                             value={newReview.score}
                             onChange={handleChange}
                             min="0"
@@ -83,7 +82,7 @@ const Reviews = () => {
                 <div>
                     <label>
                         Description:
-                        <input  
+                        <input
                             name="description"
                             value={newReview.description}
                             onChange={handleChange}
@@ -92,7 +91,7 @@ const Reviews = () => {
                     </label>
                 </div>
                 <div>
-                <label>
+                    <label>
                         Hours Played:
                         <input
                             type="number"
@@ -103,21 +102,21 @@ const Reviews = () => {
                         />
                     </label>
                 </div>
-                <button type='submit'>{editReview !== null ? 'Update' : 'Submit'}</button>
+                <button type="submit">{editReview !== null ? 'Update' : 'Submit'}</button>
             </form>
             <ul>
-                {reviews.map( (review, index) => (
+                {reviews.map((review) => (
                     <li key={review._id}>
                         <p>Score: {review.score}/100</p>
                         <p>Description: {review.description}</p>
                         <p>Hours Played: {review.hoursPlayed}</p>
-                        <button onClick={ () => handleEdit(review)}>Edit</button>
-                        <button onClick={ () => handleDelete(review._id)}>Delete</button>
+                        <button onClick={() => handleEdit(review)}>Edit</button>
+                        <button onClick={() => handleDelete(review._id)}>Delete</button>
                     </li>
                 ))}
             </ul>
         </div>
-    )
-}
+    );
+};
 
 export default Reviews;

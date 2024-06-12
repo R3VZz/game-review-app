@@ -1,12 +1,25 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
 // json model for reviews
-const reviewSchema = new Schema({
-    score: { type: Number },
-    description: { type: String },
-    hoursPlayed: { type: Number }
+const reviewSchema = new mongoose.Schema({
+    score: {
+        type: Number, 
+        required: true 
+    },
+    description: {
+        type: String,
+        required: true 
+    },
+    hoursPlayed: {
+        type: Number,
+        required: true
+    },
+    gameId: {
+        type: Number,
+        required: true 
+    }
 })
 
-module.exports = mongoose.model('Review', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
+
+module.exports = Review;
