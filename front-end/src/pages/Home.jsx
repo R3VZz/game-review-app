@@ -48,20 +48,18 @@ const Home = () => {
             <Search onSearch={handleSearch} />
             {err ? (<p>Error: {err}</p>) : (
                 <div className="game-info">
-                    {filteredGames.length > 0 ? (
-                        filteredGames.map((game) => (
-                            <div className="info" key={game.appid}>
-                                <Link className='link' to={`/games/${game.appid}`}>
-                                    <p>{game.name}</p>
-                                </Link>
-                            </div>
-                        ))
-                    ) : (<p>No games found</p>)
-                    }
+                    {(filteredGames.length > 0 ? filteredGames : gameData).map((game) => (
+                        <div className="info" key={game.appid}>
+                            <Link className='link' to={`/games/${game.appid}`}>
+                                <p>{game.name}</p>
+                            </Link>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
     );
 }
+
 
 export default Home;
