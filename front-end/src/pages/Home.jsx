@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import './Home.css';
-import Search from "../components/searchReview";
+import Search from "../components/search-games";
 
 const Home = () => {
     const [gameData, setGameData] = useState([]);
@@ -51,7 +50,17 @@ const Home = () => {
                     {(filteredGames.length > 0 ? filteredGames : gameData).map((game) => (
                         <div className="info" key={game.appid}>
                             <Link className='link' to={`/games/${game.appid}`}>
-                                <p>{game.name}</p>
+                                <div className="game-container">
+                                    <div className="icon">
+                                        <img 
+                                            src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+                                            alt="game icon"    
+                                        />
+                                    </div>
+                                    <div className="title">
+                                        <p>{game.name}</p>
+                                    </div>
+                                </div>
                             </Link>
                         </div>
                     ))}

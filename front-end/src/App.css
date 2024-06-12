@@ -1,6 +1,11 @@
+body{
+  background-color: #282c34;
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -9,3 +14,36 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.game-info {
+  padding: 20px;
+  border-color: rgb(189, 116, 28);
+  border: 10px;
+  border-style: solid;
+}
+
+.info {
+  margin: 10px 0;
+}
+
+.game-name {
+  font-size: 20px;
+  color:khaki;
+}
+
+
+.link {
+  color:burlywood; 
+  text-decoration: none; 
+}
+
+.link:hover {
+  color: red;
+}
+
