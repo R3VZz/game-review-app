@@ -30,7 +30,7 @@ app.get('/api/games', async (req, res) => {
     }
 });
 
-//route to get single game by id
+// route to get single game by id
 app.get('/api/games/:id', async (req, res) => {
     try{
         const gameID = parseInt(req.params.id, 10);

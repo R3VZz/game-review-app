@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Reviews from '../components/reviews';
 
 const Game = () => {
     const { id } = useParams();
@@ -39,16 +40,19 @@ const Game = () => {
                     <p>Total Playtime: { Math.floor(game.playtime_forever / 60) } hours</p>
                     <img 
                         src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-                        alt="game icon"/>
+                        alt="game icon"    
+                    />
                     {/* add submit review component */}
                     {/* add review section component */}
                 </div>
             ) : (
                 <p>No game data available</p>
             )}
+                <div>
+                    <Reviews />        
+                </div>
         </div>
     );
 };
-
 
 export default Game;
