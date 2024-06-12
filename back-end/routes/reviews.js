@@ -2,10 +2,19 @@ const express = require('express');
 const router = express.Router();
 const itemsController = require('../controllers/controllers.js')
 
-router.get('/', itemsController.getReviews) // get all reviews
-router.get('/:id', itemsController.getReview) // get one review by ID
-router.post('/', itemsController.createReview) // create a review
-router.patch('/:id', itemsController.editReview) // edit a review by ID
-router.delete('/:id', itemsController.deleteReview) // delete a review by ID
+// get all reviews for a specific game
+router.get('/game/:gameId', itemsController.getReviewsByGame);
+
+// get one review by ID
+router.get('/:id', itemsController.getReview);
+
+ // create a review
+router.post('/', itemsController.createReview);
+
+ // edit a review by ID
+router.patch('/:id', itemsController.editReview);
+
+// delete a review by ID
+router.delete('/:id', itemsController.deleteReview);
 
 module.exports = router;

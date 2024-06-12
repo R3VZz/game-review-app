@@ -1,9 +1,9 @@
 // model for review JSON structure to follow
 const Review = require('../models/review-model.js')
 
-// GET request - read review
+// GET request - read review by ID
 const getReview = async (req, res) => {
-    // get id from ':id' param from the route (the :id in the route path)
+    // get id for ':id' param from the route (the :id in the route path)
     const { id } = req.params
     // find review with Model.findById()
     const review = await Review.findById(id)
@@ -11,27 +11,24 @@ const getReview = async (req, res) => {
     res.status(200).json(review)
 }
 
-// GET request for all items - read all reviews
-const getReviews = async (req, res) => {
+// GET request - read all reviews for a specific game
+const getReviewsByGame = async (req, res) => {
+    const { gameId } = req.params;
     // find all items from a mongoose Model method 
-    const reviews = await Review.find({})
-    // respond with an object that has a message and the items from the DB
-
+    const reviews = await Review.find({ gameId })
     // respond with a success message
-    res.status(200).json({
-        message: "all reviews",
-        reviews
-    }) 
+    res.status(200).json({ reviews }) 
 }
 
 // POST request - add review
 const createReview = async (req, res) => {
-    const { score, description, hoursPlayed } = req.body
+    const { score, description, hoursPlayed, gameId } = req.body
 
     const reviewObject = new Review({
         score,
         description,
-        hoursPlayed
+        hoursPlayed,
+        gameId
     });
 
     const newReview = await reviewObject.save()
@@ -45,7 +42,7 @@ const editReview = async (req, res) => {
     //get the updated data
     const updates = req.body;
     // use the mongoose model method - findByIdAndUpdate
-    const review = await Review.findByIdAndUpdate(id, updates);
+    const review = await Review.findByIdAndUpdate(id, updates, { new: true });
     // if the review item is not found:
     if (!review) {
         return res.status(404).json( { message: "Review not found"} );
@@ -70,7 +67,7 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
     getReview,
-    getReviews,
+    getReviewsByGame,
     createReview,
     editReview,
     deleteReview
