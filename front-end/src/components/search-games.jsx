@@ -10,12 +10,16 @@ const Search = ({ onSearch }) => {
   };
 
   return (
-    <input
-      type="text"
-      placeholder="Search Game Library"
-      onChange={handleChange}
-      value={searchedValue}
-    />
+    <div className="search-bar">
+      <label>Search: </label>
+      <input
+        type="text"
+        placeholder="Search Game Library"
+        onChange={handleChange}
+        value={searchedValue}
+      />
+    </div>
+
   );
 };
 
