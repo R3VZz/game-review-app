@@ -1,7 +1,12 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
   background-color: #282c34;
   margin: 0;
   padding: 0;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  color: white;
 }
 
 .App {
@@ -11,39 +16,81 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.game-container {
+h1 {
+  font-size: 40px;
+}
+
+.filter-options {
   display: flex;
   justify-content: center;
   padding: 5px;
 }
 
-.game-info {
-  padding: 20px;
-  border-color: rgb(189, 116, 28);
-  border: 10px;
-  border-style: solid;
+.search-bar {
+  width: 70%;
 }
 
-.info {
-  margin: 10px 0;
+.search-bar>input {
+  width: 70%;
+  height: 30px;
+  background-color: #282c34;
+  color: #fffb00;
+  text-align: center;
+  border: white 2px solid;
+  border-radius: 10px;
 }
 
-.game-name {
-  font-size: 20px;
-  color:khaki;
+.sort-menu > select {
+  width: 70%;
+  height: 30px;
+  background-color: #282c34;
+  color: #fffb00;
+  text-align: center;
+  border: white 2px solid;
+  border-radius: 10px;
 }
 
-
-.link {
-  color:burlywood; 
-  text-decoration: none; 
+.sort-menu > select > option {
+  border-radius: 10px;
 }
 
-.link:hover {
-  color: red;
+.game-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
 }
 
+.game {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game>.title {
+  padding-left: 10px;
+  font-size: 24px;
+}
+
+.game:hover {
+  transform: scale(1.05);
+}
+
+.game img {
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+a {
+  color: #fffb00;
+  text-decoration: none;
+  font-size: 16px;
+}

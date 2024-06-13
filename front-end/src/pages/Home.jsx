@@ -13,18 +13,18 @@ const Home = () => {
     const fetchHandler = async () => {
         try {
             let response = await fetch("http://localhost:4000/api/games");
-    
+
             if (!response) {
                 throw new Error(response.statusText)
             }
 
             let data = await response.json();
             console.log(data);
-        
+
             if (data.response && data.response.games) {
-            setGameData(data.response.games);
+                setGameData(data.response.games);
             } else {
-            setGameData([]);
+                setGameData([]);
             }
 
         } catch (err) {
@@ -33,15 +33,15 @@ const Home = () => {
         }
     }
 
-    useEffect ( () => {
+    useEffect(() => {
         fetchHandler()
     }, [])
 
     const handleSearch = (searchValue) => {
-        const filteredItems = gameData.filter((game) => 
-        game.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setFilteredGames(filteredItems);
+        const filteredItems = gameData.filter((game) =>
+            game.name.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        setFilteredGames(filteredItems);
     }
 
     const handleSortChange = (e) => {
@@ -53,12 +53,12 @@ const Home = () => {
     }
 
     const sortGames = (games, criteria, order) => {
-        return [...games].sort((a,b) => {
+        return [...games].sort((a, b) => {
             let comparison = 0;
-            if(criteria === 'name') {
+            if (criteria === 'name') {
                 comparison = a.name.localeCompare(b.name)
             }
-            return  order === 'asc' ? comparison : -comparison;
+            return order === 'asc' ? comparison : -comparison;
         })
     }
 
@@ -69,44 +69,38 @@ const Home = () => {
         <div>
             <h1>Game List</h1>
 
-            <Search onSearch={handleSearch} />
-            <SortGames 
-                sortOrder={sortOrder}
-                handlesSortOrderChange={handleSortOrderChange}
+            <div className="filter-options">
+                <Search onSearch={handleSearch} />
+                <SortGames
+                    sortOrder={sortOrder}
+                    handlesSortOrderChange={handleSortOrderChange}
                 />
+            </div>
 
-            {err ? (<p>Error: {err}</p>) : (
-                <div className="table-container">
-                <table className="game-table">
-                    <thead>
-                        <tr>
-                            <th>Icon</th>
-                            <th>Title</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedGames.map((game) => (
-                            <tr key={game.appid}>
-                                <td className="icon">
+
+            {err ? (
+                <p>Error: {err}</p>
+            ) : (
+                <div className="game-container">
+                    {sortedGames.map((game) => (
+                        <Link className="link" to={`/games/${game.appid}`}>
+                            <div key={game.appid} className="game">
+                                <div className="icon">
                                     <img
                                         src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
                                         alt="game icon"
                                     />
-                                </td>
-                                <td className="title">
-                                    <Link className='link' to={`/games/${game.appid}`}>
-                                        {game.name}
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                                <div className="title">
+                                    {game.name}
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             )}
         </div>
     );
-}
-
+};
 
 export default Home;
