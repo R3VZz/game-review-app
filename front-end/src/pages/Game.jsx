@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Reviews from '../components/reviews';
+// import '../components/review-style.css'
 
 const Game = () => {
     const { id } = useParams();
@@ -29,20 +30,20 @@ const Game = () => {
     }, [id]);
 
     return (
-        <div>
+        <div className='review-page'>
             {loading ? (
                 <p>Loading...</p>
             ) : err ? (
                 <p>Error: {err}</p>
             ) : game ? (
                 <div key={game.appid}>
-                    <h2>{game.name}</h2>
-                    <p>Total Playtime: {Math.floor(game.playtime_forever / 60)} hours</p>
-                    <img 
-                        src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-                        alt="game icon"
-                    />
-                    {/* Add Reviews component and pass game.appid */}
+                    <div className='game-info'>
+                        <img
+                            src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+                            alt="game icon"
+                        />
+                        <h1 className='page-title'>{game.name}</h1>
+                    </div>
                     <Reviews gameId={game.appid} />
                 </div>
             ) : (
