@@ -61,57 +61,79 @@ const Reviews = ({ gameId }) => {
         });
     };
 
+    const renderForm = (isEdit = false) => (
+        <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
+            <div className='review-form'>
+                <label>
+                    Score:
+                    <input
+                        name="score"
+                        value={newReview.score}
+                        onChange={handleChange}
+                        min="0"
+                        max="100"
+                        placeholder='input score between 0-100'
+                        required
+                    />
+                </label>
+            </div>
+            <div className='review-form'>
+                <div className='description-container'>
+                    <label>
+                        Description:
+                    </label>
+                    <textarea
+                        name="description"
+                        value={newReview.description}
+                        onChange={handleChange}
+                        placeholder='Share your thoughts'
+                        required
+                    />
+                </div>
+            </div>
+            <div className='review-form'>
+                <label>
+                    Hours Played:
+                    <input
+                        name="hoursPlayed"
+                        value={newReview.hoursPlayed}
+                        onChange={handleChange}
+                        placeholder='How many hours have you played'
+                        min="0"
+                        required
+                    />
+                </label>
+            </div>
+            <button type="submit">{isEdit ? 'Update' : 'Submit'}</button>
+        </form>
+    );
+
     return (
         <div>
             <h2>Reviews:</h2>
-            <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
-                <div>
-                    <label>
-                        Score:
-                        <input
-                            type="number"
-                            name="score"
-                            value={newReview.score}
-                            onChange={handleChange}
-                            min="0"
-                            max="100"
-                            required
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Description:
-                        <input
-                            name="description"
-                            value={newReview.description}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Hours Played:
-                        <input
-                            type="number"
-                            name="hoursPlayed"
-                            value={newReview.hoursPlayed}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                </div>
-                <button type="submit">{editReview !== null ? 'Update' : 'Submit'}</button>
-            </form>
-            <ul>
+            {renderForm()}
+            <ul className='review-list'>
                 {reviews.map((review) => (
-                    <li key={review._id}>
-                        <p>Score: {review.score}/100</p>
-                        <p>Description: {review.description}</p>
-                        <p>Hours Played: {review.hoursPlayed}</p>
-                        <button onClick={() => handleEdit(review)}>Edit</button>
-                        <button onClick={() => handleDelete(review._id)}>Delete</button>
+                    <li key={review._id} className='review-card'>
+                        <div>
+                            <div className='review-score'>
+                                <h3>Score:</h3>
+                                <p>{review.score}/100</p>
+                            </div>
+                            <div className='review-description'>
+                                <h3>Description:</h3>
+                                <p>{review.description}</p>
+                            </div>
+                            <div className='review-hours'>
+                                <h3>Hours Played:</h3>
+                                <p>{review.hoursPlayed}</p>
+                            </div>
+                            <div className='buttons'>
+                                <button onClick={() => handleEdit(review)}>Edit</button>
+                                <button onClick={() => handleDelete(review._id)}>Delete</button>
+                            </div>
+                            {editReview === review._id && renderForm(true)}
+                        </div>
                     </li>
                 ))}
             </ul>

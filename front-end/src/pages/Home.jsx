@@ -67,7 +67,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Game List</h1>
+            <h1 className="page-title">Game List</h1>
 
             <div className="filter-options">
                 <Search onSearch={handleSearch} />
@@ -83,8 +83,8 @@ const Home = () => {
             ) : (
                 <div className="game-container">
                     {sortedGames.map((game) => (
-                        <Link className="link" to={`/games/${game.appid}`}>
-                            <div key={game.appid} className="game">
+                        <Link key={game.appid} className="link" to={`/games/${game.appid}`}>
+                            <div className="game">
                                 <div className="icon">
                                     <img
                                         src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
