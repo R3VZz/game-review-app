@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/game-review-app/static/css/main.71ee57ad.css",
+    "main.js": "/game-review-app/static/js/main.cd8643a1.js",
+    "index.html": "/game-review-app/index.html",
+    "main.71ee57ad.css.map": "/game-review-app/static/css/main.71ee57ad.css.map",
+    "main.cd8643a1.js.map": "/game-review-app/static/js/main.cd8643a1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.71ee57ad.css",
+    "static/js/main.cd8643a1.js"
+  ]
+}
